@@ -213,6 +213,7 @@ def validar_estructura(rep: dict) -> None:
     for p in rep["partes"]:
         chequear_menciones(f"partes {p.get('id')}.nombre", p.get("nombre"))
         chequear_menciones(f"partes {p.get('id')}.cedula", p.get("cedula"))
+        chequear_menciones(f"partes {p.get('id')}.domicilio", p.get("domicilio"))
     for p in rep["pretensiones"]:
         chequear_menciones(f"pretensiones {p.get('id')}.monto", p.get("monto"))
     for h in rep["hechos"]:
@@ -460,6 +461,9 @@ def _desde_hasta(rep: dict, clave: str) -> tuple[dt.date | None, str]:
             return f, motivo and f"notificación de la resolución del último recurso: {motivo}"
         f, motivo = fecha_unica(menciones(acto.get("fecha_notificacion")))
         return f, motivo and f"notificación del acto impugnado: {motivo}"
+    if clave == "@notificacion_acto_impugnado":
+        f, motivo = fecha_unica(menciones(acto.get("fecha_notificacion")))
+        return f, motivo and f"notificación del acto impugnado: {motivo}"
     if clave == "@fecha_presentacion_o_escrito":
         fp = fecha(rep["escrito"].get("fecha_presentacion"))
         if fp:
@@ -575,12 +579,22 @@ def evaluar_regla(rep: dict, regla: dict, params: dict, cal: Calendario) -> list
         salida.append(("CUMPLE" if ok else "INCUMPLE", "" if ok else "No consta el poder"))
     elif tipo == "plazo":
         salida.append(calcular_plazo(rep, c, cal))
+    elif tipo == "normas_presentes":
+        rol = c.get("rol")
+        ok = any(rol is None or n["rol"] == rol for n in rep["normas_invocadas"])
+        salida.append(("CUMPLE" if ok else "INCUMPLE", "" if ok else
+                       "El escrito no invoca " + (f"normas con rol '{rol}'" if rol else "fundamento de derecho alguno")))
+    elif tipo == "manual":
+        salida.append(("NO_DETERMINABLE", "Requisito no decidible mecánicamente; lo verifica el asistente: " + c["pregunta"]))
     else:
         salida.append(("NO_DETERMINABLE", f"Tipo de comprobación desconocido: {tipo}"))
 
+    estado = regla["estado"]
+    if tipo == "plazo" and c.get("computo", {}).get("estado_reglas_computo") == "SV" and estado != "SV":
+        estado = "SV"  # el plazo puede estar confirmado, pero no su forma de cómputo
     resultados = []
     for res, det in salida:
-        if regla["estado"] == "SV":
+        if estado == "SV":
             if res == "INCUMPLE":
                 res, det = "PREGUNTA", det + ". Base normativa SIN VERIFICAR: confirme el requisito antes de tenerlo por incumplido"
             elif res == "CUMPLE":
@@ -666,19 +680,50 @@ def cotejar_corpus(rep: dict, dir_corpus: Path) -> list[Resultado]:
 # Orquestación y salida
 # ---------------------------------------------------------------------------
 
+GENERICO = "generico"
+
+
+def cargar_reglas(dir_reglas: Path, tipo: str) -> tuple[dict | None, bool]:
+    """Carga las reglas del tipo, resolviendo 'incluye' (reglas heredadas) y 'excluye'.
+
+    Si no hay archivo para el tipo, usa las reglas generales y lo indica (segundo valor True).
+    """
+    def leer(nombre: str, pila: tuple[str, ...]) -> dict:
+        if nombre in pila:
+            raise ValueError(f"Inclusión circular de reglas: {' → '.join(pila + (nombre,))}")
+        datos = json.loads((dir_reglas / f"{nombre}.json").read_text(encoding="utf-8"))
+        reglas, params, nombres = [], {}, []
+        for incluido in datos.get("incluye", []):
+            base = leer(incluido, pila + (nombre,))
+            reglas += base["reglas"]
+            params.update(base.get("parametros", {}))
+        excluir = set(datos.get("excluye", []))
+        reglas = [r for r in reglas if r["id"] not in excluir]
+        ids = {r["id"] for r in datos.get("reglas", [])}
+        reglas = [r for r in reglas if r["id"] not in ids] + datos.get("reglas", [])
+        params.update(datos.get("parametros", {}))
+        return {"nombre": datos.get("nombre", nombre), "reglas": reglas, "parametros": params}
+
+    if (dir_reglas / f"{tipo}.json").is_file():
+        return leer(tipo, ()), False
+    if (dir_reglas / f"{GENERICO}.json").is_file():
+        return leer(GENERICO, ()), True
+    return None, True
+
+
 def verificar(rep: dict, dir_reglas: Path, dir_corpus: Path, archivo_cal: Path) -> dict:
     validar_estructura(rep)
     tipo = rep["escrito"]["tipo"]
-    archivo_reglas = dir_reglas / f"{tipo}.json"
-    reglas = json.loads(archivo_reglas.read_text(encoding="utf-8")) if archivo_reglas.is_file() else None
+    reglas, generico = cargar_reglas(dir_reglas, tipo)
     params = (reglas or {}).get("parametros", {})
     cal = Calendario(json.loads(archivo_cal.read_text(encoding="utf-8")) if archivo_cal.is_file() else {})
 
     resultados = coherencia(rep) + congruencia(rep, params.get("concepto_min_palabras", 25))
-    if reglas is None:
-        resultados.append(Resultado("REQ-00", "C-09", "Requisitos formales del tipo de escrito", "NO_DETERMINABLE", "",
-                                    f"No hay reglas para el tipo '{tipo}' en {dir_reglas.name}/", zona="interpretativa"))
-    else:
+    if generico and tipo != GENERICO:
+        resultados.append(Resultado("REQ-00", "C-09", "Requisitos formales propios del tipo de escrito", "NO_DETERMINABLE", "",
+                                    f"No hay reglas específicas para '{tipo}'; se aplicaron solo las reglas generales. "
+                                    "Los requisitos propios de esta vía los verifica el asistente", zona="interpretativa"))
+    if reglas is not None:
         for regla in reglas["reglas"]:
             resultados += evaluar_regla(rep, regla, params, cal)
     resultados += cotejar_corpus(rep, dir_corpus)

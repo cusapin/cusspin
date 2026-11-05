@@ -1,0 +1,90 @@
+{
+  "tipo": "civil_proceso_ordinario",
+  "nombre": "Demanda civil (Código Procesal Civil, Ley 402 de 2023)",
+  "incluye": [
+    "generico"
+  ],
+  "excluye": [
+    "G-12"
+  ],
+  "ultima_revision": "2026-11-05",
+  "nota_estados": "C-1: confirmado contra Gaceta Oficial. C-2: confirmado contra fuente secundaria identificada. SV: sin verificar (memoria o lógica procesal general). Un incumplimiento de regla SV se reporta como PREGUNTA.",
+  "nota": "Vigencia integral del Código Procesal Civil en octubre de 2025 (día 9 u 11 según la fuente). Numeración de artículos tomada de material del Órgano Judicial, no de la Gaceta.",
+  "reglas": [
+    {
+      "id": "CIV-01",
+      "control": "C-03",
+      "descripcion": "Base jurídica sustantiva de la pretensión.",
+      "base": "CPC (Ley 402 de 2023), art. 385, num. 9",
+      "estado": "C-2",
+      "severidad": "GRAVE",
+      "comprobacion": {
+        "tipo": "normas_presentes"
+      },
+      "fuente_verificacion": "Presentación del Órgano Judicial sobre las novedades del CPC"
+    },
+    {
+      "id": "CIV-02",
+      "control": "C-09",
+      "descripcion": "Medio expreso para recibir notificaciones.",
+      "base": "CPC (Ley 402 de 2023), art. 385, num. 10",
+      "estado": "C-2",
+      "severidad": "GRAVE",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "escrito.medio_notificacion"
+      },
+      "fuente_verificacion": "Presentación del Órgano Judicial sobre las novedades del CPC"
+    },
+    {
+      "id": "CIV-03",
+      "control": "C-09",
+      "descripcion": "Primera página: tipo de proceso, partes y tribunal.",
+      "base": "CPC (Ley 402 de 2023), art. 166",
+      "estado": "C-2",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿La primera página indica el tipo de proceso, las partes y el tribunal? ¿El escrito está en español?"
+      },
+      "fuente_verificacion": "Guía de la Judicatura (Órgano Judicial)"
+    },
+    {
+      "id": "CIV-04",
+      "control": "C-10",
+      "descripcion": "Pretensión expresada con claridad.",
+      "base": "CPC (Ley 402 de 2023), art. 384",
+      "estado": "C-2",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿La pretensión está formulada con claridad y precisión, sin ambigüedad sobre lo que se pide?"
+      },
+      "fuente_verificacion": "Análisis académico (revista Sapientia, Órgano Judicial)"
+    },
+    {
+      "id": "CIV-05",
+      "control": "C-09",
+      "descripcion": "Anexos exigidos con la demanda.",
+      "base": "CPC (Ley 402 de 2023), art. 386 (contenido no confirmado)",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿Se acompañan los documentos que exige el CPC para esta clase de proceso (p. ej., certificado del Registro Público si se demanda a una persona jurídica)?"
+      }
+    },
+    {
+      "id": "CIV-06",
+      "control": "V-05",
+      "descripcion": "Régimen procesal aplicable.",
+      "base": "Ley 402 de 2023, normas transitorias",
+      "estado": "C-2",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿El proceso se inició después de la vigencia del CPC? Si se inició antes, ¿se rige aún por el Código Judicial? Verificar que las citas procesales correspondan al régimen aplicable."
+      }
+    }
+  ]
+}

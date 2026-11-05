@@ -38,10 +38,27 @@ confirmación del apoderado.
    `motor/corpus/`.
 9. **Citas textuales.** `cita_textual` se llena solo con lo que el escrito presenta entre
    comillas o en bloque como transcripción literal.
-10. **Tipo de escrito.** `escrito.tipo` debe ser el nombre de un archivo de
-    `motor/reglas/` (hoy: `contencioso_plena_jurisdiccion`). Si no existe el tipo, se usa
-    el más cercano solo si el apoderado lo autoriza; si no, el motor reportará que no hay
-    reglas y los requisitos formales quedan en la zona interpretativa.
+10. **Tipo de escrito.** `escrito.tipo` es el nombre de un archivo de `motor/reglas/`:
+
+    | Escrito | `escrito.tipo` |
+    |---|---|
+    | Demanda contencioso-administrativa de plena jurisdicción | `contencioso_plena_jurisdiccion` |
+    | Demanda civil (Código Procesal Civil, Ley 402 de 2023) | `civil_proceso_ordinario` |
+    | Demanda laboral | `laboral_demanda` |
+    | Demanda agraria | `agrario_demanda` |
+    | Recurso de impugnación en contratación pública (TACP) | `contratacion_impugnacion` |
+    | Acción de reclamo en contratación pública (DGCP) | `contratacion_reclamo` |
+    | Amparo de garantías constitucionales | `amparo_garantias` |
+    | Acción de inconstitucionalidad | `inconstitucionalidad` |
+    | Cualquier otro (contestación, alegato, recurso, solicitud administrativa, nulidad, etc.) | `generico` |
+
+    Con `generico` el motor aplica las reglas generales y declara que los requisitos propios
+    de la vía quedan a cargo del asistente. Elegir siempre el tipo más específico que
+    corresponda; ante la duda, preguntar al apoderado en la confirmación.
+    Roles: `demandante` = quien promueve (demandante, recurrente, accionante, solicitante,
+    proponente); `demandada` = contraparte o autoridad demandada. Registrar el domicilio de
+    las partes (`domicilio`) y el medio de notificación (`escrito.medio_notificacion`)
+    cuando consten.
 11. **Fecha de presentación.** `escrito.fecha_presentacion` la aporta el apoderado (real o
     prevista). Sin ella, el motor usa la fecha del escrito y lo advierte.
 

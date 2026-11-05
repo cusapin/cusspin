@@ -1,0 +1,64 @@
+{
+  "tipo": "contratacion_reclamo",
+  "nombre": "Acción de reclamo ante la Dirección General de Contrataciones Públicas",
+  "incluye": [
+    "generico"
+  ],
+  "excluye": [
+    "G-03",
+    "G-09",
+    "G-12"
+  ],
+  "ultima_revision": "2026-11-05",
+  "nota_estados": "C-1: confirmado contra Gaceta Oficial. C-2: confirmado contra fuente secundaria identificada. SV: sin verificar (memoria o lógica procesal general). Un incumplimiento de regla SV se reporta como PREGUNTA.",
+  "nota": "La DGCP admite o inadmite en dos días hábiles y el reclamo tiene efecto suspensivo; resuelve en cinco días hábiles (C-2: Texto Único según vLex; Universidad de Panamá). Plazo y requisitos de interposición: SIN VERIFICAR.",
+  "reglas": [
+    {
+      "id": "CR-01",
+      "control": "C-08",
+      "descripcion": "Oportunidad del reclamo.",
+      "base": "Texto Único Ley 22 de 2006 (artículos por confirmar)",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿El reclamo se presenta en la etapa y dentro del plazo que la ley permite (antes de la adjudicación)?"
+      }
+    },
+    {
+      "id": "CR-02",
+      "control": "C-05",
+      "descripcion": "Objeto del reclamo.",
+      "base": "Texto Único Ley 22 de 2006",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿Se reclama un vicio u omisión del procedimiento de selección, y no el fondo de la adjudicación, que tendría otra vía?"
+      }
+    },
+    {
+      "id": "CR-03",
+      "control": "C-03",
+      "descripcion": "Normas o reglas del pliego que se estiman vulneradas.",
+      "base": "Texto Único Ley 22 de 2006 (artículo por confirmar)",
+      "estado": "SV",
+      "severidad": "GRAVE",
+      "comprobacion": {
+        "tipo": "normas_presentes"
+      }
+    },
+    {
+      "id": "CR-04",
+      "control": "C-09",
+      "descripcion": "Régimen especial.",
+      "base": "Legislación especial (p. ej., medicamentos e insumos de salud)",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿Aplica un régimen especial de contratación con reglas propias?"
+      }
+    }
+  ]
+}

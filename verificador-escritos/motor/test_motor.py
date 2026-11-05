@@ -262,5 +262,77 @@ class TestEsquemaYCli(unittest.TestCase):
             self.assertIn(seccion, md)
 
 
+class TestReglasPorMateria(unittest.TestCase):
+    TIPOS = sorted(p.stem for p in REGLAS.glob("*.json"))
+
+    def test_todas_las_materias_cargan_y_se_ejecutan(self):
+        self.assertGreaterEqual(len(self.TIPOS), 9)
+        for tipo in self.TIPOS:
+            with self.subTest(tipo=tipo):
+                rep = cargar()
+                rep["escrito"]["tipo"] = tipo
+                inf = correr(rep)
+                self.assertTrue(inf["reglas_aplicadas"])
+                ids = [r["regla"] for r in inf["resultados"]]
+                self.assertEqual(len([i for i in ids if i.startswith("REQ-00")]), 0)
+
+    def test_reglas_bien_formadas(self):
+        for tipo in self.TIPOS:
+            datos = json.loads((REGLAS / f"{tipo}.json").read_text(encoding="utf-8"))
+            for r in datos["reglas"]:
+                with self.subTest(tipo=tipo, regla=r.get("id")):
+                    self.assertTrue({"id", "control", "descripcion", "base", "estado", "comprobacion"} <= r.keys())
+                    self.assertIn(r["estado"], {"C-1", "C-2", "SV"})
+                    if r["comprobacion"]["tipo"] != "manual":
+                        self.assertIn(r["severidad"], ve.SEVERIDADES)
+
+    def test_tipo_desconocido_usa_reglas_generales(self):
+        rep = cargar()
+        rep["escrito"]["tipo"] = "recurso_de_casacion_inexistente"
+        inf = correr(rep)
+        self.assertEqual(por_regla(inf, "REQ-00")[0]["resultado"], "NO_DETERMINABLE")
+        self.assertTrue(por_regla(inf, "G-05"))
+
+    def test_herencia_y_exclusion(self):
+        reglas, generico = ve.cargar_reglas(REGLAS, "laboral_demanda")
+        ids = {r["id"] for r in reglas["reglas"]}
+        self.assertFalse(generico)
+        self.assertIn("G-08", ids)          # heredada
+        self.assertNotIn("G-01", ids)       # excluida (la sustituye LAB-01)
+        self.assertIn("LAB-04", ids)
+
+    def test_inclusion_circular(self):
+        with tempfile.TemporaryDirectory() as d:
+            for a, b in (("a", "b"), ("b", "a")):
+                (Path(d) / f"{a}.json").write_text(json.dumps({"incluye": [b], "reglas": []}), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                ve.cargar_reglas(Path(d), "a")
+
+    def test_laboral_domicilio_del_demandado(self):
+        rep = cargar()
+        rep["escrito"]["tipo"] = "laboral_demanda"
+        self.assertEqual(por_regla(correr(rep), "LAB-04")[0]["resultado"], "INCUMPLE")
+        rep["partes"][2]["domicilio"] = [{"valor": "Ciudad de Panamá", "ubicacion": "introducción"}]
+        self.assertEqual(por_regla(correr(rep), "LAB-04")[0]["resultado"], "CUMPLE")
+
+    def test_manual_va_a_zona_interpretativa(self):
+        rep = cargar()
+        rep["escrito"]["tipo"] = "agrario_demanda"
+        r = por_regla(correr(rep), "AGR-01")[0]
+        self.assertEqual((r["resultado"], r["zona"]), ("NO_DETERMINABLE", "interpretativa"))
+        self.assertIn("actividad agraria", r["detalle"])
+
+    def test_computo_sin_verificar_degrada_plazo(self):
+        rep = escrito_limpio()
+        rep["escrito"]["tipo"] = "contratacion_impugnacion"
+        rep["acto_impugnado"]["fecha_notificacion"] = [{"valor": "2026-08-03", "ubicacion": "hecho"}]
+        rep["escrito"]["fecha_presentacion"] = "2026-08-31"
+        cal = Path(tempfile.mkdtemp()) / "cal.json"
+        cal.write_text(json.dumps({"anios": {"2026": []}}), encoding="utf-8")
+        r = por_regla(correr(rep, cal=cal), "CP-01")[0]
+        self.assertEqual(r["resultado"], "PREGUNTA")   # vencido, pero el cómputo está SIN VERIFICAR
+        self.assertIn("2026-08-10", r["detalle"])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -100,7 +100,10 @@ Convertir el escrito en la **representación estructurada** definida en
 esenciales: se registra lo que el escrito **dice**, no lo que debería decir; cada mención de
 un dato se registra por separado con su ubicación; un vínculo hecho–pretensión,
 prueba–hecho o norma–hecho solo se registra si el escrito lo establece; lo que no consta
-no se inventa.
+no se inventa. El campo `escrito.tipo` se elige del catálogo de la guía de formalización
+(contencioso, civil, laboral, agrario, contratación pública, amparo, inconstitucionalidad);
+para cualquier otro escrito se usa `generico`, y los requisitos propios de esa vía se
+verifican en los Pasos 3 a 5 con su base y estado.
 
 **El apoderado no es programador.** El JSON es de uso interno: no se le muestra salvo que
 lo pida. Para la confirmación se le presenta, en lenguaje forense llano:

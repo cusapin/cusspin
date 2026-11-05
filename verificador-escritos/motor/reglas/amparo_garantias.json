@@ -1,0 +1,102 @@
+{
+  "tipo": "amparo_garantias",
+  "nombre": "Amparo de garantías constitucionales",
+  "incluye": [
+    "generico"
+  ],
+  "excluye": [
+    "G-09",
+    "G-12"
+  ],
+  "ultima_revision": "2026-11-05",
+  "nota_estados": "C-1: confirmado contra Gaceta Oficial. C-2: confirmado contra fuente secundaria identificada. SV: sin verificar (memoria o lógica procesal general). Un incumplimiento de regla SV se reporta como PREGUNTA.",
+  "reglas": [
+    {
+      "id": "AMP-01",
+      "control": "C-06",
+      "descripcion": "Dirección correcta del escrito.",
+      "base": "Código Judicial, art. 101",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "escrito.autoridad"
+      },
+      "fuente_verificacion": "Fallos del Pleno de la CSJ"
+    },
+    {
+      "id": "AMP-02",
+      "control": "C-09",
+      "descripcion": "Identificación del servidor público que dictó la orden.",
+      "base": "Constitución, art. 54; Código Judicial, art. 2615",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "acto_impugnado.emisor"
+      },
+      "fuente_verificacion": "Fallos del Pleno de la CSJ"
+    },
+    {
+      "id": "AMP-03",
+      "control": "C-09",
+      "descripcion": "Identificación de la orden de hacer o no hacer impugnada.",
+      "base": "Constitución, art. 54; Código Judicial, art. 2615",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "acto_impugnado.fecha"
+      },
+      "fuente_verificacion": "Fallos del Pleno de la CSJ"
+    },
+    {
+      "id": "AMP-04",
+      "control": "C-03",
+      "descripcion": "Derechos o garantías fundamentales que se estiman violados.",
+      "base": "Código Judicial, art. 2619 (contenido no confirmado)",
+      "estado": "SV",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "normas_presentes",
+        "rol": "infringida"
+      }
+    },
+    {
+      "id": "AMP-05",
+      "control": "C-04",
+      "descripcion": "Concepto de la infracción de cada garantía.",
+      "base": "Código Judicial, art. 2619 (contenido no confirmado)",
+      "estado": "SV",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "concepto_por_norma_infringida"
+      }
+    },
+    {
+      "id": "AMP-06",
+      "control": "C-08",
+      "descripcion": "Agotamiento de los recursos legales.",
+      "base": "Código Judicial, art. 2615, num. 2",
+      "estado": "C-2",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "Si la orden es una resolución judicial, ¿se agotaron los recursos de ley antes del amparo?"
+      },
+      "fuente_verificacion": "Fallos del Pleno de la CSJ"
+    },
+    {
+      "id": "AMP-07",
+      "control": "C-08",
+      "descripcion": "Plazo de interposición, gravedad e inminencia del daño.",
+      "base": "Jurisprudencia del Pleno (por confirmar)",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿Se presenta dentro del plazo jurisprudencial y se acredita la gravedad e inminencia del daño?"
+      }
+    }
+  ]
+}

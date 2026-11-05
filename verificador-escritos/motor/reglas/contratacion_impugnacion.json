@@ -1,0 +1,99 @@
+{
+  "tipo": "contratacion_impugnacion",
+  "nombre": "Recurso de impugnación ante el Tribunal Administrativo de Contrataciones Públicas",
+  "incluye": [
+    "generico"
+  ],
+  "excluye": [
+    "G-09",
+    "G-12"
+  ],
+  "ultima_revision": "2026-11-05",
+  "nota_estados": "C-1: confirmado contra Gaceta Oficial. C-2: confirmado contra fuente secundaria identificada. SV: sin verificar (memoria o lógica procesal general). Un incumplimiento de regla SV se reporta como PREGUNTA.",
+  "nota": "Texto Único de la Ley 22 de 2006 (ordenado por la Ley 153 de 2020). La numeración cambió entre versiones: confirmar cada artículo en el Texto Único vigente.",
+  "reglas": [
+    {
+      "id": "CP-01",
+      "control": "C-08",
+      "descripcion": "Plazo de cinco días hábiles para interponer el recurso.",
+      "base": "Texto Único Ley 22 de 2006 (artículo por confirmar)",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "plazo",
+        "desde": "@notificacion_acto_impugnado",
+        "hasta": "@fecha_presentacion_o_escrito",
+        "cantidad": 5,
+        "unidad": "dias_habiles",
+        "computo": {
+          "prorroga_si_inhabil": false,
+          "estado_reglas_computo": "SV",
+          "nota": "Punto de inicio del cómputo (notificación o publicación en PanamaCompra): SIN VERIFICAR."
+        }
+      },
+      "fuente_verificacion": "Biblioteca Sistematizada de PanamaCompra"
+    },
+    {
+      "id": "CP-02",
+      "control": "C-09",
+      "descripcion": "Fianza de recurso de impugnación (10 % del precio de referencia en bienes y servicios; 15 % en obras).",
+      "base": "Texto Único Ley 22 de 2006, art. 125 (según fuente secundaria)",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "anexo_clase",
+        "clase": "fianza_impugnacion"
+      },
+      "fuente_verificacion": "Tribunal Administrativo de Contrataciones Públicas, citado por fuente secundaria"
+    },
+    {
+      "id": "CP-03",
+      "control": "C-03",
+      "descripcion": "Normas que se estiman infringidas por el acto.",
+      "base": "Texto Único Ley 22 de 2006 (artículo por confirmar)",
+      "estado": "SV",
+      "severidad": "GRAVE",
+      "comprobacion": {
+        "tipo": "normas_presentes",
+        "rol": "infringida"
+      }
+    },
+    {
+      "id": "CP-04",
+      "control": "C-07",
+      "descripcion": "Legitimación del recurrente.",
+      "base": "Texto Único Ley 22 de 2006",
+      "estado": "C-2",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿El recurrente es proponente que participó en el procedimiento y se considera agraviado por el acto?"
+      },
+      "fuente_verificacion": "Biblioteca Sistematizada de PanamaCompra"
+    },
+    {
+      "id": "CP-05",
+      "control": "C-05",
+      "descripcion": "Acto impugnable.",
+      "base": "Texto Único Ley 22 de 2006",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿El acto recurrido (adjudicación, declaratoria de desierto, rechazo, etc.) es de los que admiten recurso de impugnación?"
+      }
+    },
+    {
+      "id": "CP-06",
+      "control": "C-09",
+      "descripcion": "Reglas especiales de la contratación de que se trate.",
+      "base": "Legislación especial (p. ej., adquisición de medicamentos e insumos de salud)",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿La compra se rige por un régimen especial (medicamentos, equipos médicos, CSS) con plazos o requisitos distintos de la Ley 22 de 2006?"
+      }
+    }
+  ]
+}

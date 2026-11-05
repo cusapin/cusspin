@@ -1,0 +1,153 @@
+{
+  "tipo": "generico",
+  "nombre": "Reglas generales aplicables a cualquier escrito",
+  "ultima_revision": "2026-11-05",
+  "nota_estados": "C-1: confirmado contra Gaceta Oficial. C-2: confirmado contra fuente secundaria identificada. SV: sin verificar (memoria o lógica procesal general). Un incumplimiento de regla SV se reporta como PREGUNTA.",
+  "nota": "Se aplican cuando no hay reglas específicas para el tipo, y como base heredada por las reglas de cada materia. En la representación, rol 'demandante' = quien promueve (demandante, recurrente, accionante, solicitante, proponente); rol 'demandada' = contraparte o autoridad demandada.",
+  "parametros": {
+    "concepto_min_palabras": 25
+  },
+  "reglas": [
+    {
+      "id": "G-01",
+      "control": "C-06",
+      "descripcion": "Autoridad a la que se dirige el escrito.",
+      "base": "Requisito común de los escritos de demanda o solicitud; la base concreta depende de la vía",
+      "estado": "SV",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "escrito.autoridad"
+      }
+    },
+    {
+      "id": "G-02",
+      "control": "C-09",
+      "descripcion": "Designación de quien promueve.",
+      "base": "Requisito común de los escritos de demanda o solicitud; la base concreta depende de la vía",
+      "estado": "SV",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "partes[rol=demandante].nombre"
+      }
+    },
+    {
+      "id": "G-03",
+      "control": "C-09",
+      "descripcion": "Designación de la contraparte o autoridad demandada (si la vía la tiene).",
+      "base": "Requisito común de los escritos de demanda o solicitud; la base concreta depende de la vía",
+      "estado": "SV",
+      "severidad": "GRAVE",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "partes[rol=demandada].nombre"
+      }
+    },
+    {
+      "id": "G-04",
+      "control": "C-07",
+      "descripcion": "Designación del apoderado.",
+      "base": "Requisito común de los escritos de demanda o solicitud; la base concreta depende de la vía",
+      "estado": "SV",
+      "severidad": "GRAVE",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "partes[rol=apoderado].nombre"
+      }
+    },
+    {
+      "id": "G-05",
+      "control": "C-09",
+      "descripcion": "Lo que se pide: al menos una pretensión.",
+      "base": "Requisito común de los escritos de demanda o solicitud; la base concreta depende de la vía",
+      "estado": "SV",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "pretensiones"
+      }
+    },
+    {
+      "id": "G-06",
+      "control": "C-09",
+      "descripcion": "Hechos que fundamentan lo pedido.",
+      "base": "Requisito común de los escritos de demanda o solicitud; la base concreta depende de la vía",
+      "estado": "SV",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "hechos"
+      }
+    },
+    {
+      "id": "G-07",
+      "control": "C-03",
+      "descripcion": "Fundamento de derecho.",
+      "base": "Requisito común de los escritos de demanda o solicitud; la base concreta depende de la vía",
+      "estado": "SV",
+      "severidad": "GRAVE",
+      "comprobacion": {
+        "tipo": "normas_presentes"
+      }
+    },
+    {
+      "id": "G-08",
+      "control": "C-07",
+      "descripcion": "Poder otorgado al apoderado.",
+      "base": "Requisito común de los escritos de demanda o solicitud; la base concreta depende de la vía",
+      "estado": "SV",
+      "severidad": "GRAVE",
+      "comprobacion": {
+        "tipo": "poder_consta"
+      }
+    },
+    {
+      "id": "G-09",
+      "control": "C-09",
+      "descripcion": "Cuantía de cada pretensión pecuniaria.",
+      "base": "Requisito común de los escritos de demanda o solicitud; la base concreta depende de la vía",
+      "estado": "SV",
+      "severidad": "GRAVE",
+      "comprobacion": {
+        "tipo": "pretensiones_pecuniarias_con_monto"
+      }
+    },
+    {
+      "id": "G-10",
+      "control": "C-05/C-06",
+      "descripcion": "Vía procesal y competencia.",
+      "base": "Lógica procesal general",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿La vía escogida permite obtener lo que se pide y la autoridad es competente por materia, grado y territorio?"
+      }
+    },
+    {
+      "id": "G-11",
+      "control": "C-08",
+      "descripcion": "Oportunidad.",
+      "base": "Lógica procesal general",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿Cuál es el plazo de caducidad o prescripción de esta vía y el escrito se presenta dentro de él? ¿Debía agotarse antes alguna vía o recurso?"
+      }
+    },
+    {
+      "id": "G-12",
+      "control": "C-09",
+      "descripcion": "Requisitos propios de la vía.",
+      "base": "Ver referencias/requisitos-por-escrito.md",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "No hay reglas mecánicas para esta vía: identificar sus requisitos formales y contrastarlos, con su base y estado de verificación."
+      }
+    }
+  ]
+}

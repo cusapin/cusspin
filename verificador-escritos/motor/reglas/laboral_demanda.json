@@ -1,0 +1,135 @@
+{
+  "tipo": "laboral_demanda",
+  "nombre": "Demanda laboral (Código de Trabajo)",
+  "incluye": [
+    "generico"
+  ],
+  "excluye": [
+    "G-01",
+    "G-02",
+    "G-03",
+    "G-05",
+    "G-06",
+    "G-12"
+  ],
+  "ultima_revision": "2026-11-05",
+  "nota_estados": "C-1: confirmado contra Gaceta Oficial. C-2: confirmado contra fuente secundaria identificada. SV: sin verificar (memoria o lógica procesal general). Un incumplimiento de regla SV se reporta como PREGUNTA.",
+  "nota": "Art. 553 del Código de Trabajo confirmado solo contra copias no oficiales del Código; no se obtuvo la lista completa de sus numerales. Verificar posibles reformas procesales laborales.",
+  "reglas": [
+    {
+      "id": "LAB-01",
+      "control": "C-06",
+      "descripcion": "Designación del juez a quien se dirige.",
+      "base": "Código de Trabajo, art. 553",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "escrito.autoridad"
+      },
+      "fuente_verificacion": "Copias no oficiales del Código de Trabajo"
+    },
+    {
+      "id": "LAB-02",
+      "control": "C-09",
+      "descripcion": "Nombre del demandante.",
+      "base": "Código de Trabajo, art. 553",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "partes[rol=demandante].nombre"
+      },
+      "fuente_verificacion": "Copias no oficiales del Código de Trabajo"
+    },
+    {
+      "id": "LAB-03",
+      "control": "C-09",
+      "descripcion": "Nombre del demandado.",
+      "base": "Código de Trabajo, art. 553",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "partes[rol=demandada].nombre"
+      },
+      "fuente_verificacion": "Copias no oficiales del Código de Trabajo"
+    },
+    {
+      "id": "LAB-04",
+      "control": "C-09",
+      "descripcion": "Domicilio o residencia del demandado (o declaración jurada si se ignora).",
+      "base": "Código de Trabajo, art. 553",
+      "estado": "C-2",
+      "severidad": "GRAVE",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "partes[rol=demandada].domicilio"
+      },
+      "fuente_verificacion": "Copias no oficiales del Código de Trabajo"
+    },
+    {
+      "id": "LAB-05",
+      "control": "C-09",
+      "descripcion": "Lo que se demanda, con claridad y precisión.",
+      "base": "Código de Trabajo, art. 553",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "pretensiones"
+      },
+      "fuente_verificacion": "Copias no oficiales del Código de Trabajo"
+    },
+    {
+      "id": "LAB-06",
+      "control": "C-09",
+      "descripcion": "Hechos u omisiones que sustentan lo que se demanda.",
+      "base": "Código de Trabajo, art. 553",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "hechos"
+      },
+      "fuente_verificacion": "Copias no oficiales del Código de Trabajo"
+    },
+    {
+      "id": "LAB-07",
+      "control": "C-09",
+      "descripcion": "Copias de la demanda por cada demandado.",
+      "base": "Código de Trabajo (artículo por confirmar)",
+      "estado": "C-2",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿Se presentan tantas copias de la demanda como demandados?"
+      },
+      "fuente_verificacion": "Copias no oficiales del Código de Trabajo"
+    },
+    {
+      "id": "LAB-08",
+      "control": "C-09",
+      "descripcion": "Demás numerales del art. 553.",
+      "base": "Código de Trabajo, art. 553",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "Confirmar en el texto oficial los numerales restantes del art. 553 y contrastarlos con el escrito."
+      }
+    },
+    {
+      "id": "LAB-09",
+      "control": "C-08",
+      "descripcion": "Prescripción de la acción laboral.",
+      "base": "Código de Trabajo (artículos por confirmar)",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿La acción está dentro del plazo de prescripción aplicable a la prestación reclamada?"
+      }
+    }
+  ]
+}

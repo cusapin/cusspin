@@ -1,0 +1,77 @@
+{
+  "tipo": "inconstitucionalidad",
+  "nombre": "Acción de inconstitucionalidad (Pleno de la CSJ)",
+  "incluye": [
+    "generico"
+  ],
+  "excluye": [
+    "G-03",
+    "G-09",
+    "G-12"
+  ],
+  "ultima_revision": "2026-11-05",
+  "nota_estados": "C-1: confirmado contra Gaceta Oficial. C-2: confirmado contra fuente secundaria identificada. SV: sin verificar (memoria o lógica procesal general). Un incumplimiento de regla SV se reporta como PREGUNTA.",
+  "reglas": [
+    {
+      "id": "INC-01",
+      "control": "C-06",
+      "descripcion": "Dirección correcta del escrito.",
+      "base": "Código Judicial, art. 101",
+      "estado": "C-2",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "campo_presente",
+        "ruta": "escrito.autoridad"
+      },
+      "fuente_verificacion": "Fallos del Pleno de la CSJ"
+    },
+    {
+      "id": "INC-02",
+      "control": "C-03",
+      "descripcion": "Normas constitucionales que se estiman infringidas.",
+      "base": "Código Judicial, arts. 2560-2561 (contenido no confirmado)",
+      "estado": "SV",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "normas_presentes",
+        "rol": "infringida"
+      }
+    },
+    {
+      "id": "INC-03",
+      "control": "C-04",
+      "descripcion": "Concepto de la infracción de cada norma constitucional.",
+      "base": "Código Judicial, arts. 2560-2561 (contenido no confirmado)",
+      "estado": "SV",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "concepto_por_norma_infringida"
+      }
+    },
+    {
+      "id": "INC-04",
+      "control": "C-09",
+      "descripcion": "Transcripción literal de la disposición acusada.",
+      "base": "Código Judicial, arts. 2560-2561 (contenido no confirmado)",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿Se transcribe literalmente la disposición o el acto que se acusa?"
+      }
+    },
+    {
+      "id": "INC-05",
+      "control": "C-09",
+      "descripcion": "Requisitos comunes de toda demanda.",
+      "base": "Código Judicial, art. 665 (y su relación con la Ley 402 de 2023)",
+      "estado": "C-2",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿Cumple los requisitos comunes de la demanda aplicables a esta jurisdicción?"
+      },
+      "fuente_verificacion": "Fallos del Pleno de la CSJ"
+    }
+  ]
+}

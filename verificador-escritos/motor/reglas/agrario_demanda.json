@@ -1,0 +1,53 @@
+{
+  "tipo": "agrario_demanda",
+  "nombre": "Demanda agraria (Código Agrario, Ley 55 de 2011)",
+  "incluye": [
+    "generico"
+  ],
+  "excluye": [
+    "G-12"
+  ],
+  "ultima_revision": "2026-11-05",
+  "nota_estados": "C-1: confirmado contra Gaceta Oficial. C-2: confirmado contra fuente secundaria identificada. SV: sin verificar (memoria o lógica procesal general). Un incumplimiento de regla SV se reporta como PREGUNTA.",
+  "nota": "Según fuente académica, la demanda agraria debe cumplir los requisitos comunes del art. 665 del Código Judicial y enunciar la actividad agraria. Tras la Ley 402 de 2023 (que derogó el Libro II del Código Judicial), verificar si la norma supletoria es ahora el Código Procesal Civil.",
+  "reglas": [
+    {
+      "id": "AGR-01",
+      "control": "C-09",
+      "descripcion": "Enunciación de la actividad agraria de que se trata.",
+      "base": "Código Agrario (Ley 55 de 2011), artículo por confirmar",
+      "estado": "C-2",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿El escrito enuncia expresamente la actividad agraria involucrada?"
+      },
+      "fuente_verificacion": "Fuente académica (Universidad de Panamá)"
+    },
+    {
+      "id": "AGR-02",
+      "control": "V-05",
+      "descripcion": "Norma supletoria y requisitos comunes.",
+      "base": "Código Agrario; Código Judicial art. 665 / CPC (Ley 402 de 2023)",
+      "estado": "SV",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿Qué cuerpo rige supletoriamente (Código Judicial o CPC) según la fecha del proceso, y el escrito cumple sus requisitos comunes?"
+      }
+    },
+    {
+      "id": "AGR-03",
+      "control": "C-06",
+      "descripcion": "Competencia del juzgado agrario.",
+      "base": "Código Agrario (Ley 55 de 2011)",
+      "estado": "C-2",
+      "severidad": "",
+      "comprobacion": {
+        "tipo": "manual",
+        "pregunta": "¿Se dirige al Juzgado Agrario de la provincia o comarca competente (o al Tribunal Superior Agrario si corresponde)?"
+      },
+      "fuente_verificacion": "Fuente académica y texto de la Ley 55 de 2011 (copias)"
+    }
+  ]
+}

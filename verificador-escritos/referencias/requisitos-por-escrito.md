@@ -67,6 +67,21 @@ legal confirmado.
 | Plazo para interponer el amparo desde la notificación o conocimiento de la orden. | Jurisprudencial / legal — **base SV** | **SV** |
 | Gravedad e inminencia del daño que justifique la vía sumaria. | Jurisprudencia del Pleno — **SV** | **SV** |
 
+## E-bis. Otras materias con reglas en el motor (verificación del 5-nov-2026)
+
+| Materia | Requisito | Base | Estado |
+|---|---|---|---|
+| Civil (CPC) | Base jurídica sustantiva; medio expreso para notificaciones | Ley 402 de 2023, art. 385, nums. 9 y 10 | C-2 (material del Órgano Judicial) |
+| Civil (CPC) | Primera página con tipo de proceso, partes y tribunal; idioma español | Ley 402 de 2023, art. 166 | C-2 (guía de la Judicatura) |
+| Civil (CPC) | Pretensión clara; anexos | Ley 402 de 2023, arts. 384 y 386 | C-2 / SV (contenido de 386) |
+| Laboral | Juez, partes y representantes, domicilio del demandado, lo que se demanda y hechos | Código de Trabajo, art. 553 | C-2 (copias no oficiales; lista incompleta) |
+| Laboral | Copias por cada demandado | Código de Trabajo (artículo SV) | C-2 |
+| Agrario | Requisitos comunes + enunciación de la actividad agraria | Ley 55 de 2011; CJ art. 665 (supletoriedad por revisar tras Ley 402) | C-2 (fuente académica) |
+| Contratación pública | Recurso de impugnación ante el TACP en 5 días hábiles | Texto Único Ley 22 de 2006 (artículo SV) | C-2 (PanamaCompra); inicio del cómputo SV |
+| Contratación pública | Fianza: 10 % bienes y servicios; 15 % obras | Texto Único Ley 22 de 2006, art. 125 | C-2 |
+| Contratación pública | Acción de reclamo ante la DGCP: admisión en 2 días hábiles, efecto suspensivo, resolución en 5 días hábiles | Texto Único Ley 22 de 2006 (arts. 143, 143-A, 144 según fuente académica) | C-2; plazo de interposición SV |
+| Contratación pública | Régimen especial de medicamentos, equipos e insumos de salud | Legislación especial | SV — verificar caso por caso |
+
 ## F. Hábeas corpus, hábeas data, recursos ordinarios y extraordinarios, escritos penales
 
 Pendiente de poblar con verificación. Hasta entonces, el verificador trata cualquier

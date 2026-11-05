@@ -4,72 +4,187 @@
   "title": "Representación estructurada de un escrito jurídico (formalización)",
   "description": "Registra lo que EL ESCRITO DICE, no lo que debería decir. Si el escrito menciona un mismo dato de dos maneras, se registran ambas menciones: la discrepancia es precisamente lo que el motor detecta. Las fechas van en formato AAAA-MM-DD tal como resultan del escrito, aunque sean imposibles (p. ej., 2026-02-30).",
   "type": "object",
-  "required": ["version_esquema", "escrito", "partes", "pretensiones", "hechos", "pruebas", "normas_invocadas", "formalizacion"],
+  "required": [
+    "version_esquema",
+    "escrito",
+    "partes",
+    "pretensiones",
+    "hechos",
+    "pruebas",
+    "normas_invocadas",
+    "formalizacion"
+  ],
   "$defs": {
     "mencion": {
       "type": "object",
-      "required": ["valor", "ubicacion"],
+      "required": [
+        "valor",
+        "ubicacion"
+      ],
       "properties": {
-        "valor": {"type": "string", "description": "El dato tal como aparece (fechas normalizadas a AAAA-MM-DD; montos como número decimal con punto, sin separador de miles)."},
-        "ubicacion": {"type": "string", "description": "Dónde aparece: 'introducción', 'hecho cuarto', 'petitoria', 'pág. 3 párr. 2'."}
+        "valor": {
+          "type": "string",
+          "description": "El dato tal como aparece (fechas normalizadas a AAAA-MM-DD; montos como número decimal con punto, sin separador de miles)."
+        },
+        "ubicacion": {
+          "type": "string",
+          "description": "Dónde aparece: 'introducción', 'hecho cuarto', 'petitoria', 'pág. 3 párr. 2'."
+        }
       }
     },
-    "menciones": {"type": "array", "items": {"$ref": "#/$defs/mencion"}},
-    "ids": {"type": "array", "items": {"type": "string"}}
+    "menciones": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/mencion"
+      }
+    },
+    "ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
   },
   "properties": {
-    "version_esquema": {"const": "1.0"},
+    "version_esquema": {
+      "const": "1.0"
+    },
     "escrito": {
       "type": "object",
-      "required": ["tipo"],
+      "required": [
+        "tipo"
+      ],
       "properties": {
-        "tipo": {"type": "string", "description": "Clave del archivo de reglas en motor/reglas/ (p. ej., 'contencioso_plena_jurisdiccion')."},
-        "autoridad": {"type": "string"},
-        "fecha_escrito": {"$ref": "#/$defs/menciones"},
-        "fecha_presentacion": {"type": ["string", "null"], "description": "Fecha real (o prevista) de presentación, AAAA-MM-DD. La aporta el apoderado, no el escrito."}
+        "tipo": {
+          "type": "string",
+          "description": "Clave del archivo de reglas en motor/reglas/: contencioso_plena_jurisdiccion, civil_proceso_ordinario, laboral_demanda, agrario_demanda, contratacion_impugnacion, contratacion_reclamo, amparo_garantias, inconstitucionalidad o generico. Un tipo sin archivo se verifica con las reglas generales."
+        },
+        "autoridad": {
+          "type": "string"
+        },
+        "fecha_escrito": {
+          "$ref": "#/$defs/menciones"
+        },
+        "fecha_presentacion": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Fecha real (o prevista) de presentación, AAAA-MM-DD. La aporta el apoderado, no el escrito."
+        },
+        "medio_notificacion": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Medio expreso para recibir notificaciones que indica el escrito (correo electrónico, dirección), si consta."
+        }
       }
     },
     "partes": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "rol", "nombre"],
+        "required": [
+          "id",
+          "rol",
+          "nombre"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "rol": {"enum": ["demandante", "demandada", "apoderado", "tercero", "testigo", "representante_legal", "otro"]},
-          "nombre": {"$ref": "#/$defs/menciones"},
-          "cedula": {"$ref": "#/$defs/menciones"},
-          "representa_a": {"type": ["string", "null"]}
+          "id": {
+            "type": "string"
+          },
+          "rol": {
+            "enum": [
+              "demandante",
+              "demandada",
+              "apoderado",
+              "tercero",
+              "testigo",
+              "representante_legal",
+              "otro"
+            ],
+            "description": "'demandante' = quien promueve (demandante, recurrente, accionante, solicitante, proponente); 'demandada' = contraparte o autoridad demandada."
+          },
+          "nombre": {
+            "$ref": "#/$defs/menciones"
+          },
+          "cedula": {
+            "$ref": "#/$defs/menciones"
+          },
+          "representa_a": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "domicilio": {
+            "$ref": "#/$defs/menciones"
+          }
         }
       }
     },
     "poder": {
       "type": "object",
-      "properties": {"consta": {"type": "boolean"}, "anexo": {"type": ["string", "null"]}}
+      "properties": {
+        "consta": {
+          "type": "boolean"
+        },
+        "anexo": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
     },
     "acto_impugnado": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
-        "numero": {"$ref": "#/$defs/menciones"},
-        "fecha": {"$ref": "#/$defs/menciones"},
-        "emisor": {"$ref": "#/$defs/menciones"},
-        "fecha_notificacion": {"$ref": "#/$defs/menciones"}
+        "numero": {
+          "$ref": "#/$defs/menciones"
+        },
+        "fecha": {
+          "$ref": "#/$defs/menciones"
+        },
+        "emisor": {
+          "$ref": "#/$defs/menciones"
+        },
+        "fecha_notificacion": {
+          "$ref": "#/$defs/menciones"
+        }
       }
     },
     "agotamiento": {
       "type": "object",
       "properties": {
-        "consta": {"type": "boolean", "description": "¿El escrito afirma y documenta que se agotó la vía o los recursos previos?"},
+        "consta": {
+          "type": "boolean",
+          "description": "¿El escrito afirma y documenta que se agotó la vía o los recursos previos?"
+        },
         "recursos": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["tipo"],
+            "required": [
+              "tipo"
+            ],
             "properties": {
-              "tipo": {"type": "string"},
-              "fecha_interposicion": {"$ref": "#/$defs/menciones"},
-              "fecha_resolucion": {"$ref": "#/$defs/menciones"},
-              "fecha_notificacion": {"$ref": "#/$defs/menciones"}
+              "tipo": {
+                "type": "string"
+              },
+              "fecha_interposicion": {
+                "$ref": "#/$defs/menciones"
+              },
+              "fecha_resolucion": {
+                "$ref": "#/$defs/menciones"
+              },
+              "fecha_notificacion": {
+                "$ref": "#/$defs/menciones"
+              }
             }
           }
         }
@@ -79,30 +194,73 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "texto", "clase", "hechos"],
+        "required": [
+          "id",
+          "texto",
+          "clase",
+          "hechos"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "texto": {"type": "string"},
-          "clase": {"enum": ["declarativa", "condena_pecuniaria", "restablecimiento", "cautelar", "otra"]},
-          "monto": {"$ref": "#/$defs/menciones"},
-          "hechos": {"$ref": "#/$defs/ids"},
-          "ubicacion": {"type": "string"}
+          "id": {
+            "type": "string"
+          },
+          "texto": {
+            "type": "string"
+          },
+          "clase": {
+            "enum": [
+              "declarativa",
+              "condena_pecuniaria",
+              "restablecimiento",
+              "cautelar",
+              "otra"
+            ]
+          },
+          "monto": {
+            "$ref": "#/$defs/menciones"
+          },
+          "hechos": {
+            "$ref": "#/$defs/ids"
+          },
+          "ubicacion": {
+            "type": "string"
+          }
         }
       }
     },
-    "cuantia_total": {"$ref": "#/$defs/menciones"},
+    "cuantia_total": {
+      "$ref": "#/$defs/menciones"
+    },
     "hechos": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "texto", "pruebas"],
+        "required": [
+          "id",
+          "texto",
+          "pruebas"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "numero_en_escrito": {"type": "string", "description": "Tal como aparece: 'PRIMERO', 'CUARTO', '3'."},
-          "texto": {"type": "string"},
-          "fecha": {"$ref": "#/$defs/menciones"},
-          "pruebas": {"$ref": "#/$defs/ids"},
-          "esencial": {"type": "boolean", "description": "Si sostiene directamente una pretensión. Por defecto, true."}
+          "id": {
+            "type": "string"
+          },
+          "numero_en_escrito": {
+            "type": "string",
+            "description": "Tal como aparece: 'PRIMERO', 'CUARTO', '3'."
+          },
+          "texto": {
+            "type": "string"
+          },
+          "fecha": {
+            "$ref": "#/$defs/menciones"
+          },
+          "pruebas": {
+            "$ref": "#/$defs/ids"
+          },
+          "esencial": {
+            "type": "boolean",
+            "description": "Si sostiene directamente una pretensión. Por defecto, true."
+          }
         }
       }
     },
@@ -110,12 +268,31 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "descripcion", "estado"],
+        "required": [
+          "id",
+          "descripcion",
+          "estado"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "descripcion": {"type": "string"},
-          "estado": {"enum": ["aportada", "aducida", "anunciada_sin_aportar"]},
-          "anexo": {"type": ["string", "null"]}
+          "id": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "estado": {
+            "enum": [
+              "aportada",
+              "aducida",
+              "anunciada_sin_aportar"
+            ]
+          },
+          "anexo": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
@@ -123,11 +300,21 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "clase"],
+        "required": [
+          "id",
+          "clase"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "clase": {"type": "string", "description": "p. ej., 'copia_acto_con_notificacion', 'poder', 'documental', 'certificacion'."},
-          "descripcion": {"type": "string"}
+          "id": {
+            "type": "string"
+          },
+          "clase": {
+            "type": "string",
+            "description": "p. ej., 'copia_acto_con_notificacion', 'poder', 'documental', 'certificacion'."
+          },
+          "descripcion": {
+            "type": "string"
+          }
         }
       }
     },
@@ -135,25 +322,82 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "cuerpo_texto", "articulo", "rol", "hechos", "pretensiones"],
+        "required": [
+          "id",
+          "cuerpo_texto",
+          "articulo",
+          "rol",
+          "hechos",
+          "pretensiones"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "cuerpo_id": {"type": ["string", "null"], "description": "Clave en motor/corpus/ (p. ej., 'ley-135-1943'), si existe."},
-          "cuerpo_texto": {"type": "string", "description": "Como lo cita el escrito."},
-          "articulo": {"type": "string"},
-          "rol": {"enum": ["infringida", "fundamento", "procesal"]},
-          "hechos": {"$ref": "#/$defs/ids"},
-          "pretensiones": {"$ref": "#/$defs/ids"},
-          "cita_textual": {"type": ["string", "null"]},
-          "fecha_relevante": {"type": ["string", "null"], "description": "Fecha cuya versión de la norma interesa (normalmente la del acto). Si falta, se usa la del acto impugnado."},
+          "id": {
+            "type": "string"
+          },
+          "cuerpo_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Clave en motor/corpus/ (p. ej., 'ley-135-1943'), si existe."
+          },
+          "cuerpo_texto": {
+            "type": "string",
+            "description": "Como lo cita el escrito."
+          },
+          "articulo": {
+            "type": "string"
+          },
+          "rol": {
+            "enum": [
+              "infringida",
+              "fundamento",
+              "procesal"
+            ]
+          },
+          "hechos": {
+            "$ref": "#/$defs/ids"
+          },
+          "pretensiones": {
+            "$ref": "#/$defs/ids"
+          },
+          "cita_textual": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fecha_relevante": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Fecha cuya versión de la norma interesa (normalmente la del acto). Si falta, se usa la del acto impugnado."
+          },
           "concepto": {
-            "type": ["object", "null"],
+            "type": [
+              "object",
+              "null"
+            ],
             "properties": {
-              "modalidad": {"type": ["string", "null"], "description": "violacion_directa_por_comision | violacion_directa_por_omision | interpretacion_erronea | indebida_aplicacion | otra"},
-              "explicacion": {"type": ["string", "null"]}
+              "modalidad": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "violacion_directa_por_comision | violacion_directa_por_omision | interpretacion_erronea | indebida_aplicacion | otra"
+              },
+              "explicacion": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
             }
           },
-          "ubicacion": {"type": "string"}
+          "ubicacion": {
+            "type": "string"
+          }
         }
       }
     },
@@ -161,23 +405,56 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "descripcion"],
+        "required": [
+          "id",
+          "descripcion"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "descripcion": {"type": "string"},
-          "cita_textual": {"type": ["string", "null"]},
-          "proposicion_atribuida": {"type": ["string", "null"]}
+          "id": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "cita_textual": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "proposicion_atribuida": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
     "formalizacion": {
       "type": "object",
-      "required": ["confirmada_por_apoderado"],
+      "required": [
+        "confirmada_por_apoderado"
+      ],
       "properties": {
-        "elaborada_por": {"type": "string"},
-        "confirmada_por_apoderado": {"type": "boolean"},
-        "fecha": {"type": ["string", "null"]},
-        "observaciones": {"type": ["string", "null"]}
+        "elaborada_por": {
+          "type": "string"
+        },
+        "confirmada_por_apoderado": {
+          "type": "boolean"
+        },
+        "fecha": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observaciones": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       }
     }
   }
