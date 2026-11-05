@@ -31,7 +31,12 @@ Esto permite que Claude ejecute el motor de verificación por dentro. Usted no v
 
 ### Paso 3. Suba el verificador
 
-1. Vaya a **Personalizar → Habilidades** (*Customize → Skills*).
+1. En la **barra lateral izquierda** de Claude (la columna donde aparecen "Nueva
+   conversación", los proyectos y el historial), haga clic en **Personalizar**
+   (*Customize*) y luego en **Habilidades** (*Skills*). Si no ve la barra, pulse el ícono
+   de panel de la esquina superior izquierda para desplegarla. En algunas cuentas el
+   apartado puede llamarse **Plugins**. En diseños anteriores, la opción está en
+   **Configuración → Capacidades**, más abajo, en la sección **Habilidades**.
 2. Haga clic en **"+"** y luego en **"Crear habilidad"** (*+ Create skill*).
 3. Elija **"Subir una habilidad"** (*Upload a skill*).
 4. Seleccione el archivo `verificador-escritos-pa.zip` del Paso 1.
