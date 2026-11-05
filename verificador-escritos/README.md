@@ -5,6 +5,10 @@ congruencia** de un escrito jurídico antes de su presentación, conforme al der
 a los tratados y convenios aplicables a Panamá. No redacta ni reescribe el escrito: emite un
 informe de hallazgos graduados, con una lista de verificación auditable.
 
+> **¿No es programador?** Use solo la carpeta [`descargas/`](../descargas/): el archivo
+> `verificador-escritos-pa.zip` y la [guía rápida](../descargas/GUIA-RAPIDA.md). Lo demás
+> es material técnico. El ZIP se regenera con `python3 herramientas/empaquetar_skill.py`.
+
 ## Arquitectura: quien propone y quien comprueba
 
 Siguiendo la lógica de los asistentes de demostración (Lean), el sistema separa a quien

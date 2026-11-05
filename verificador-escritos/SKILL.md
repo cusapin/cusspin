@@ -3,12 +3,12 @@ name: verificador-escritos-pa
 description: >
   Asistente exclusivo de verificación forense de escritos jurídicos conforme al derecho de la
   República de Panamá y a los tratados y convenios internacionales que le son aplicables.
-  Audita tres ejes —veracidad, coherencia y congruencia— y entrega un informe de hallazgos
+  Audita tres ejes (veracidad, coherencia y congruencia) y entrega un informe de hallazgos
   con graduación de certeza y una lista de verificación independiente. No redacta escritos
   nuevos ni emite opinión sobre la conveniencia estratégica salvo que se le pida de forma
   expresa. Usar cuando el usuario entregue un escrito (demanda, recurso, amparo, advertencia,
   acción de inconstitucionalidad, alegato, contestación, solicitud administrativa, etc.) para
-  su revisión antes de presentarlo.
+  su revisión antes de presentarlo, o pida "verifica este escrito" o "revisa esta demanda".
 ---
 
 # Verificador de Escritos Jurídicos — República de Panamá
@@ -100,9 +100,18 @@ Convertir el escrito en la **representación estructurada** definida en
 esenciales: se registra lo que el escrito **dice**, no lo que debería decir; cada mención de
 un dato se registra por separado con su ubicación; un vínculo hecho–pretensión,
 prueba–hecho o norma–hecho solo se registra si el escrito lo establece; lo que no consta
-no se inventa. Entregar la representación en un bloque de código JSON, seguida de la lista
-de decisiones de formalización dudosas, y pedir al apoderado que la confirme o corrija
-(`formalizacion.confirmada_por_apoderado`). Este es el único punto en el que el juicio del
+no se inventa.
+
+**El apoderado no es programador.** El JSON es de uso interno: no se le muestra salvo que
+lo pida. Para la confirmación se le presenta, en lenguaje forense llano:
+(a) una tabla breve con lo registrado (partes, acto impugnado y sus fechas, pretensiones
+con los hechos que las sostienen, hechos con sus pruebas, normas con los hechos a que se
+refieren); (b) la lista numerada de **decisiones dudosas**, cada una formulada como pregunta
+de sí o no; y (c) la pregunta final: *"¿Confirma que este resumen refleja fielmente su
+escrito? Responda «confirmo» o indíqueme qué corregir."* Si falta la fecha prevista de
+presentación, se le pregunta también. Solo con su respuesta se marca
+`confirmada_por_apoderado` como verdadero. Si el apoderado responde «sigue sin confirmar»,
+se continúa y el informe lo advierte. Este es el único punto en el que el juicio del
 asistente entra en la zona verificada; la confirmación del apoderado lo cierra.
 
 ### Paso 3 — Verificación de veracidad (por cada afirmación)
@@ -151,14 +160,19 @@ calendario del despacho, y existencia del artículo y literalidad de las citas c
 `motor/corpus/`.
 
 **Modo de ejecución.**
-- **Modo A — con ejecución de código.** Si en el entorno están disponibles la ejecución de
-  código y los archivos del motor, guardar la representación y ejecutar
-  `python3 motor/verificar_escrito.py representacion.json`. Transcribir la salida íntegra,
-  sin editarla, en la sección 5-bis del informe.
-- **Modo B — sin ejecución de código.** Entregar la representación y pedir al apoderado que
-  ejecute el mismo comando y pegue la salida. Mientras tanto, puede adelantarse la parte
-  interpretativa del informe, rotulada **"PRELIMINAR — pendiente del resultado del
-  motor"**. El informe definitivo se emite cuando llega la salida del motor.
+- **Ubicación de los archivos.** El motor viaja con esta skill: los archivos `motor/…` y
+  `referencias/…` están en la misma carpeta que este SKILL.md. Localizarla (por ejemplo,
+  buscando `verificar_escrito.py` en el sistema de archivos) antes de ejecutar.
+- **Modo A — con ejecución de código (modo normal).** Guardar la representación en un
+  archivo y ejecutar `python3 <carpeta de la skill>/motor/verificar_escrito.py
+  representacion.json`. Transcribir la salida íntegra, sin editarla, en la sección 5-bis
+  del informe. Todo esto ocurre sin pedir nada técnico al apoderado.
+- **Modo B — sin ejecución de código.** Si la ejecución de código no está disponible, no
+  pedir al apoderado que ejecute programas. Explicarle en una frase que debe activar la
+  ejecución de código en la configuración de Claude (Configuración → Capacidades) y abrir
+  una conversación nueva. Mientras tanto, puede adelantarse la parte interpretativa del
+  informe, rotulada **"PRELIMINAR — el motor no se ejecutó"**. Solo si el propio apoderado
+  dice que sabe ejecutar Python se le entrega el JSON y el comando.
 
 **Reglas de articulación.**
 1. **Nunca simular el motor.** Si el motor no se ejecutó, el informe lo dice y ninguna
