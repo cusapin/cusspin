@@ -1,0 +1,144 @@
+{
+  "tipo": "contencioso_plena_jurisdiccion",
+  "nombre": "Demanda contencioso-administrativa de plena jurisdicción (Sala Tercera, CSJ)",
+  "ultima_revision": "2026-11-05",
+  "nota_estados": "C-1: confirmado contra texto primario (Gaceta Oficial). C-2: confirmado contra fuente secundaria identificada. SV: sin verificar (memoria). Un incumplimiento de una regla SV se reporta como PREGUNTA, no como INCUMPLE.",
+  "parametros": {
+    "concepto_min_palabras": 25,
+    "concepto_min_palabras_nota": "Umbral de EXISTENCIA del concepto de la infracción, no de su suficiencia. Por debajo de él, el concepto se tiene por ausente; por encima, su suficiencia es juicio interpretativo."
+  },
+  "reglas": [
+    {
+      "id": "CA-01",
+      "control": "C-09",
+      "descripcion": "Designación de la parte demandante.",
+      "base": "Ley 135 de 1943, art. 43, num. 1 (texto de la Ley 33 de 1946)",
+      "estado": "C-2",
+      "fuente_verificacion": "Dictámenes de la Procuraduría de la Administración que transcriben el artículo",
+      "severidad": "CRÍTICO",
+      "comprobacion": {"tipo": "campo_presente", "ruta": "partes[rol=demandante].nombre"}
+    },
+    {
+      "id": "CA-02",
+      "control": "C-09",
+      "descripcion": "Designación de la parte demandada.",
+      "base": "Ley 135 de 1943, art. 43, num. 1",
+      "estado": "C-2",
+      "fuente_verificacion": "Dictámenes de la Procuraduría de la Administración",
+      "severidad": "CRÍTICO",
+      "comprobacion": {"tipo": "campo_presente", "ruta": "partes[rol=demandada].nombre"}
+    },
+    {
+      "id": "CA-03",
+      "control": "C-09",
+      "descripcion": "Designación del representante (apoderado).",
+      "base": "Ley 135 de 1943, art. 43, num. 1",
+      "estado": "C-2",
+      "fuente_verificacion": "Dictámenes de la Procuraduría de la Administración",
+      "severidad": "CRÍTICO",
+      "comprobacion": {"tipo": "campo_presente", "ruta": "partes[rol=apoderado].nombre"}
+    },
+    {
+      "id": "CA-04",
+      "control": "C-09",
+      "descripcion": "Lo que se demanda: al menos una pretensión.",
+      "base": "Ley 135 de 1943, art. 43, num. 2",
+      "estado": "C-2",
+      "fuente_verificacion": "Dictámenes de la Procuraduría de la Administración",
+      "severidad": "CRÍTICO",
+      "comprobacion": {"tipo": "campo_presente", "ruta": "pretensiones"}
+    },
+    {
+      "id": "CA-05",
+      "control": "C-09",
+      "descripcion": "Hechos u omisiones fundamentales de la acción.",
+      "base": "Ley 135 de 1943, art. 43, num. 3",
+      "estado": "C-2",
+      "fuente_verificacion": "Dictámenes de la Procuraduría de la Administración",
+      "severidad": "CRÍTICO",
+      "comprobacion": {"tipo": "campo_presente", "ruta": "hechos"}
+    },
+    {
+      "id": "CA-06",
+      "control": "C-09",
+      "descripcion": "Expresión de las disposiciones que se estiman violadas.",
+      "base": "Ley 135 de 1943, art. 43, num. 4",
+      "estado": "C-2",
+      "fuente_verificacion": "Dictámenes de la Procuraduría de la Administración",
+      "severidad": "CRÍTICO",
+      "comprobacion": {"tipo": "normas_infringidas_presentes"}
+    },
+    {
+      "id": "CA-07",
+      "control": "C-04",
+      "descripcion": "Concepto de la violación para cada disposición que se estima violada.",
+      "base": "Ley 135 de 1943, art. 43, num. 4",
+      "estado": "C-2",
+      "fuente_verificacion": "Dictámenes de la Procuraduría de la Administración",
+      "severidad": "CRÍTICO",
+      "comprobacion": {"tipo": "concepto_por_norma_infringida"}
+    },
+    {
+      "id": "CA-08",
+      "control": "C-09",
+      "descripcion": "Cuantía de cada prestación reclamada.",
+      "base": "Ley 135 de 1943, art. 43-A",
+      "estado": "C-2",
+      "fuente_verificacion": "Dictámenes de la Procuraduría de la Administración",
+      "severidad": "CRÍTICO",
+      "comprobacion": {"tipo": "pretensiones_pecuniarias_con_monto"}
+    },
+    {
+      "id": "CA-09",
+      "control": "C-08",
+      "descripcion": "Agotamiento de la vía gubernativa.",
+      "base": "Ley 135 de 1943, art. 42",
+      "estado": "C-2",
+      "fuente_verificacion": "Dictámenes de la Procuraduría de la Administración",
+      "severidad": "CRÍTICO",
+      "comprobacion": {"tipo": "agotamiento_consta"}
+    },
+    {
+      "id": "CA-10",
+      "control": "C-09",
+      "descripcion": "Copia del acto impugnado con constancia de su notificación (o gestión para obtenerla).",
+      "base": "Ley 135 de 1943 (artículo por confirmar)",
+      "estado": "SV",
+      "fuente_verificacion": "Confirmar artículo y texto en Gaceta Oficial / Infojurídica",
+      "severidad": "CRÍTICO",
+      "comprobacion": {"tipo": "anexo_clase", "clase": "copia_acto_con_notificacion"}
+    },
+    {
+      "id": "CA-11",
+      "control": "C-07",
+      "descripcion": "Poder otorgado al apoderado.",
+      "base": "Código Judicial, normas sobre poderes (artículo por confirmar), aplicables por remisión",
+      "estado": "SV",
+      "fuente_verificacion": "Confirmar base normativa y régimen aplicable tras la Ley 402 de 2023",
+      "severidad": "GRAVE",
+      "comprobacion": {"tipo": "poder_consta"}
+    },
+    {
+      "id": "CA-12",
+      "control": "C-08",
+      "descripcion": "Plazo para demandar: dos meses desde la notificación del acto que agota la vía gubernativa.",
+      "base": "Ley 135 de 1943, art. 42-B (según memoria)",
+      "estado": "SV",
+      "fuente_verificacion": "Confirmar artículo, plazo y forma de cómputo en Gaceta Oficial / Infojurídica",
+      "severidad": "CRÍTICO",
+      "comprobacion": {
+        "tipo": "plazo",
+        "desde": "@notificacion_acto_que_agota_via",
+        "hasta": "@fecha_presentacion_o_escrito",
+        "cantidad": 2,
+        "unidad": "meses",
+        "computo": {
+          "dia_inexistente": "ultimo_del_mes",
+          "prorroga_si_inhabil": true,
+          "estado_reglas_computo": "SV",
+          "nota": "Regla de cómputo de meses y prórroga al día hábil siguiente: SIN VERIFICAR. Confirmar contra las normas de cómputo de términos aplicables."
+        }
+      }
+    }
+  ]
+}

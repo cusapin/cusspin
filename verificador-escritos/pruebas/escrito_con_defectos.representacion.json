@@ -1,0 +1,82 @@
+{
+  "version_esquema": "1.0",
+  "escrito": {
+    "tipo": "contencioso_plena_jurisdiccion",
+    "autoridad": "Magistrado Presidente de la Sala Tercera de la Corte Suprema de Justicia",
+    "fecha_escrito": [{"valor": "2026-10-01", "ubicacion": "cierre"}],
+    "fecha_presentacion": null
+  },
+  "partes": [
+    {"id": "P1", "rol": "apoderado", "nombre": [{"valor": "Ana María Pérez Gómez", "ubicacion": "introducción"}],
+     "cedula": [{"valor": "8-123-4567", "ubicacion": "introducción"}], "representa_a": "P2"},
+    {"id": "P2", "rol": "demandante", "nombre": [{"valor": "Juan Carlos Ríos", "ubicacion": "introducción"},
+                                                {"valor": "Juan Carlos Ríos", "ubicacion": "hecho primero"}],
+     "cedula": [{"valor": "4-567-890", "ubicacion": "introducción"}]},
+    {"id": "P3", "rol": "demandada", "nombre": [{"valor": "Ministerio de Ejemplo", "ubicacion": "introducción"}]},
+    {"id": "P4", "rol": "testigo", "nombre": [{"valor": "Pedro Ríos Castillo", "ubicacion": "hecho quinto"}],
+     "cedula": [{"valor": "4-567-890", "ubicacion": "hecho quinto"}]}
+  ],
+  "poder": {"consta": false, "anexo": null},
+  "acto_impugnado": {
+    "numero": [{"valor": "45-2026", "ubicacion": "introducción"}, {"valor": "45-2026", "ubicacion": "lo que se demanda"}],
+    "fecha": [{"valor": "2026-02-30", "ubicacion": "introducción"}, {"valor": "2026-03-03", "ubicacion": "lo que se demanda"}],
+    "emisor": [{"valor": "Ministerio de Ejemplo", "ubicacion": "introducción"}],
+    "fecha_notificacion": [{"valor": "2026-03-15", "ubicacion": "hecho cuarto"}]
+  },
+  "agotamiento": {
+    "consta": false,
+    "recursos": [
+      {"tipo": "reconsideración", "fecha_resolucion": [{"valor": "2026-12-20", "ubicacion": "hecho cuarto"}]}
+    ]
+  },
+  "pretensiones": [
+    {"id": "PR1", "texto": "Que se declare nula, por ilegal, la Resolución N.º 45-2026", "clase": "declarativa",
+     "hechos": ["H2"], "ubicacion": "lo que se demanda"},
+    {"id": "PR2", "texto": "Que se ordene el pago de salarios caídos", "clase": "condena_pecuniaria",
+     "monto": [{"valor": "50800.00", "ubicacion": "introducción (en cifras)"},
+               {"valor": "50300.00", "ubicacion": "introducción (en letras)"},
+               {"valor": "50300.00", "ubicacion": "lo que se demanda"}],
+     "hechos": ["H1", "H2"], "ubicacion": "introducción y lo que se demanda"},
+    {"id": "PR3", "texto": "Que se ordene el reintegro", "clase": "restablecimiento", "hechos": [],
+     "ubicacion": "lo que se demanda"}
+  ],
+  "cuantia_total": [],
+  "hechos": [
+    {"id": "H1", "numero_en_escrito": "PRIMERO", "texto": "Juan Carlos Ríos laboró en el Ministerio de Ejemplo desde el 2 de enero de 2015.",
+     "fecha": [{"valor": "2015-01-02", "ubicacion": "hecho primero"}], "pruebas": []},
+    {"id": "H2", "numero_en_escrito": "SEGUNDO", "texto": "Mediante la resolución impugnada fue destituido sin procedimiento disciplinario previo.",
+     "pruebas": []},
+    {"id": "H3", "numero_en_escrito": "CUARTO", "texto": "La resolución le fue notificada el 15 de marzo de 2026 y la reconsideración se resolvió el 20 de diciembre de 2026.",
+     "fecha": [{"valor": "2026-03-15", "ubicacion": "hecho cuarto"}, {"valor": "2026-12-20", "ubicacion": "hecho cuarto"}],
+     "pruebas": []},
+    {"id": "H4", "numero_en_escrito": "QUINTO", "texto": "Pedro Ríos Castillo actuó como testigo del acto de notificación.",
+     "pruebas": [], "esencial": false}
+  ],
+  "pruebas": [],
+  "anexos": [],
+  "normas_invocadas": [
+    {"id": "N1", "cuerpo_id": "ley-135-1943", "cuerpo_texto": "Ley 135 de 1943", "articulo": "43", "rol": "infringida",
+     "hechos": [], "pretensiones": [], "cita_textual": null, "concepto": null, "ubicacion": "disposiciones infringidas"},
+    {"id": "N2", "cuerpo_id": "ley-38-2000", "cuerpo_texto": "Ley 38 de 31 de julio de 2000", "articulo": "34", "rol": "infringida",
+     "hechos": [], "pretensiones": [], "cita_textual": null, "concepto": null, "ubicacion": "disposiciones infringidas"},
+    {"id": "N3", "cuerpo_id": "ley-38-2000", "cuerpo_texto": "Ley 38 de 31 de julio de 2000", "articulo": "52", "rol": "infringida",
+     "hechos": [], "pretensiones": [], "cita_textual": null, "concepto": null, "ubicacion": "disposiciones infringidas"},
+    {"id": "N4", "cuerpo_id": "constitucion-politica", "cuerpo_texto": "Constitución Política de la República de Panamá", "articulo": "32",
+     "rol": "infringida", "hechos": [], "pretensiones": [], "cita_textual": null, "concepto": null, "ubicacion": "disposiciones infringidas"},
+    {"id": "N5", "cuerpo_id": "cadh", "cuerpo_texto": "Convención Americana sobre Derechos Humanos", "articulo": "8", "rol": "infringida",
+     "hechos": [], "pretensiones": [], "cita_textual": null, "concepto": null, "ubicacion": "disposiciones infringidas"},
+    {"id": "N6", "cuerpo_id": "codigo-judicial", "cuerpo_texto": "Código Judicial", "articulo": "665", "rol": "procesal",
+     "hechos": [], "pretensiones": [], "cita_textual": null, "concepto": null, "ubicacion": "párrafo final"}
+  ],
+  "fallos_invocados": [
+    {"id": "F1", "descripcion": "Sentencia de 12 de junio de 2006, Sala Tercera de la Corte Suprema de Justicia",
+     "cita_textual": "el debido proceso es una garantía que se extiende a todo procedimiento administrativo en el que se afecten derechos subjetivos del administrado",
+     "proposicion_atribuida": "El debido proceso rige en el procedimiento administrativo"}
+  ],
+  "formalizacion": {
+    "elaborada_por": "asistente",
+    "confirmada_por_apoderado": false,
+    "fecha": "2026-11-05",
+    "observaciones": "El escrito menciona la Ley 402 de 2023 sin artículo; no se registra como norma invocada. Ninguna norma se vincula expresamente a hechos ni pretensiones en el escrito."
+  }
+}

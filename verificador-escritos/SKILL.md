@@ -51,7 +51,8 @@ expresa del usuario en su mensaje.
 La jerarquía y las fuentes contra las cuales se contrasta el escrito están en
 `referencias/fuentes-y-jerarquia.md`. Los requisitos formales por tipo de escrito, con su
 estado de verificación, están en `referencias/requisitos-por-escrito.md`. Los tratados de
-uso frecuente, con su ley aprobatoria, están en `referencias/tratados.md`.
+uso frecuente, con su ley aprobatoria, están en `referencias/tratados.md`. La forma de
+convertir el escrito en datos para el motor está en `referencias/guia-formalizacion.md`.
 
 **Regla de vigencia procesal civil.** Desde la entrada en vigencia integral del Código
 Procesal Civil adoptado por la Ley 402 de 2023 (octubre de 2025; ver la discrepancia de día
@@ -93,6 +94,17 @@ cédula, RUC, finca o folio; nombres propios de personas, entidades y cargos.
 La herramienta `herramientas/extraer_citas.py` produce un primer inventario mecánico; se
 usa como **punto de partida**, no como sustituto de la lectura.
 
+### Paso 2-bis — Formalización del escrito
+Convertir el escrito en la **representación estructurada** definida en
+`motor/esquema_escrito.json`, siguiendo `referencias/guia-formalizacion.md`. Reglas
+esenciales: se registra lo que el escrito **dice**, no lo que debería decir; cada mención de
+un dato se registra por separado con su ubicación; un vínculo hecho–pretensión,
+prueba–hecho o norma–hecho solo se registra si el escrito lo establece; lo que no consta
+no se inventa. Entregar la representación en un bloque de código JSON, seguida de la lista
+de decisiones de formalización dudosas, y pedir al apoderado que la confirme o corrija
+(`formalizacion.confirmada_por_apoderado`). Este es el único punto en el que el juicio del
+asistente entra en la zona verificada; la confirmación del apoderado lo cierra.
+
 ### Paso 3 — Verificación de veracidad (por cada afirmación)
 Para cada norma: (a) ¿existe el cuerpo normativo con ese número y fecha? (b) ¿el artículo
 corresponde al tema? (c) ¿la cita textual es literal o es paráfrasis presentada como cita?
@@ -129,6 +141,46 @@ legitimación activa y pasiva; oportunidad (plazo de caducidad o prescripción, 
 de la vía gubernativa o de los recursos ordinarios, según la vía); requisitos formales
 propios del tipo de escrito.
 
+### Paso 5-bis — Motor determinista (núcleo de verificación)
+El motor `motor/verificar_escrito.py` comprueba, sin intervención del modelo, la parte
+decidible de los Pasos 4 y 5 sobre la representación del Paso 2-bis: fechas y cronología,
+identidad del acto, de las partes y de los montos, numeración, completitud del grafo
+pretensión → hecho → prueba y norma → hecho/pretensión, existencia del concepto de la
+infracción, requisitos formales declarados en `motor/reglas/<tipo>.json`, plazos con el
+calendario del despacho, y existencia del artículo y literalidad de las citas contra
+`motor/corpus/`.
+
+**Modo de ejecución.**
+- **Modo A — con ejecución de código.** Si en el entorno están disponibles la ejecución de
+  código y los archivos del motor, guardar la representación y ejecutar
+  `python3 motor/verificar_escrito.py representacion.json`. Transcribir la salida íntegra,
+  sin editarla, en la sección 5-bis del informe.
+- **Modo B — sin ejecución de código.** Entregar la representación y pedir al apoderado que
+  ejecute el mismo comando y pegue la salida. Mientras tanto, puede adelantarse la parte
+  interpretativa del informe, rotulada **"PRELIMINAR — pendiente del resultado del
+  motor"**. El informe definitivo se emite cuando llega la salida del motor.
+
+**Reglas de articulación.**
+1. **Nunca simular el motor.** Si el motor no se ejecutó, el informe lo dice y ninguna
+   conclusión se atribuye al motor. Prever o reconstruir su salida está prohibido.
+2. **Precedencia en la zona verificada.** En lo que el motor comprueba, su resultado
+   prevalece sobre la lectura del modelo. Si el asistente discrepa, la causa casi siempre
+   es un error de formalización: se corrige la representación y se vuelve a ejecutar; el
+   resultado no se contradice en el informe.
+3. **Rótulos de origen.** Cada hallazgo indica su origen: **[MOTOR · regla]** (por ejemplo,
+   `[MOTOR · CA-07]`) o **[ASISTENTE]**. Los del motor tienen certeza alta *respecto de
+   la representación*; su certeza respecto del escrito depende de que la representación
+   esté confirmada.
+4. **PREGUNTA no es INCUMPLE.** Un resultado PREGUNTA proviene de una regla cuya base
+   normativa está SIN VERIFICAR: se presenta como pregunta al apoderado, con la fuente a
+   confirmar, nunca como incumplimiento.
+5. **La zona interpretativa sigue siendo del asistente.** Lo que el motor devuelve como
+   NO_DETERMINABLE (suficiencia del concepto, fallos, normas fuera del corpus, plazos sin
+   calendario confirmado) se trata con los Pasos 3 a 6 y el régimen de certeza de § 5.
+6. **Representación no confirmada.** Si `confirmada_por_apoderado` es `false`, el informe
+   advierte en su apertura que los resultados del motor están condicionados a la fidelidad
+   de la representación.
+
 ### Paso 6 — Contraexamen
 Antes de cerrar el informe, redactar la **objeción más fuerte** que formularían (a) la
 contraparte y (b) el magistrado o funcionario más hostil al planteamiento (inadmisión,
@@ -137,7 +189,8 @@ improcedencia, falta de concepto de la infracción, vía equivocada, extemporane
 hallazgo. La objeción debe ser la más fuerte disponible, no una de paja.
 
 ### Paso 7 — Informe
-Emitir el informe con la estructura obligatoria de `referencias/plantilla-informe.md`.
+Emitir el informe con la estructura obligatoria de `referencias/plantilla-informe.md`,
+integrando los resultados del motor (Paso 5-bis) con su rótulo de origen.
 
 ## 4. Clasificación de hallazgos
 

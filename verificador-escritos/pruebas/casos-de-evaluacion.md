@@ -37,3 +37,16 @@ regresión.** Un hallazgo no listado no es necesariamente un error, pero debe re
 5. El contraexamen incluye la inadmisión por falta de concepto de la infracción como la
    objeción más fuerte del juzgador.
 6. Cierra con lo no verificado y la advertencia final.
+
+## Cobertura del motor sobre el Caso 1
+
+Con `escrito_con_defectos.representacion.json`, el motor debe detectar como INCUMPLE: E-02
+(COH-01), E-03 (COH-03), E-04 (COH-06), E-05 (COH-08), E-06 (COH-05), E-07 (COH-02, crítico),
+E-08 (CON-04), E-09 (CA-07, crítico), E-10 (CON-01, crítico), E-11 (CON-02) y la falta de
+agotamiento (CA-09); como PREGUNTA: E-12 (CA-10) y E-13 (CA-11); y como NO_DETERMINABLE: el
+fallo de E-15 (INT-02), las normas fuera del corpus (E-16) y el plazo (CA-12). Lo comprueba
+`motor/test_motor.py`. E-01, E-14 y E-17 quedan a cargo del asistente.
+
+Comportamientos adicionales del informe cuando hay motor: (7) cada hallazgo lleva el rótulo
+`[MOTOR · regla]` o `[ASISTENTE]`; (8) la salida del motor se transcribe íntegra en la
+sección 5-bis; (9) si el motor no se ejecutó, el informe lo dice y no le atribuye nada.

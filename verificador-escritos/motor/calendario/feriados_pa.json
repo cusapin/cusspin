@@ -1,0 +1,6 @@
+{
+  "descripcion": "Días inhábiles adicionales a sábados y domingos (feriados nacionales, días de duelo, cierres del despacho judicial o administrativo). Lo mantiene el despacho.",
+  "estado": "SV",
+  "instrucciones": "Agregue un año solo cuando haya confirmado TODOS sus días inhábiles contra fuente oficial (ley, decreto o resolución publicada). Un año ausente significa 'no confirmado': el motor no presume que no haya feriados y declara NO_DETERMINABLE todo plazo cuyo vencimiento quede a menos de 10 días del límite.",
+  "anios": {}
+}
